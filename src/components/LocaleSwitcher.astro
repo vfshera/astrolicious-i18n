@@ -5,7 +5,10 @@ const locale = getLocale();
 const data = getSwitcherData();
 ---
 
-<select class="border border-gray-300 p-1 rounded-md bg-transparent uppercase" onchange="location = this.value;">
+<select
+  class="rounded-md border border-gray-300 bg-transparent p-1 uppercase"
+  onchange="location = this.value;"
+>
   {
     data.map((e) => (
       <option value={e.href} selected={e.locale === locale}>

@@ -1,51 +1,49 @@
 ---
 import "~/styles/global.css";
- 
-import { getSwitcherData,getHtmlAttrs } from "i18n:astro";
+
+import { getSwitcherData, getHtmlAttrs } from "i18n:astro";
 
 const data = getSwitcherData();
 
 import Header from "~/components/Header.astro";
 import Footer from "~/components/Footer.astro";
 
-
 import { SEO } from "astro-seo";
 import type { Props as AstroSEOProps } from "astro-seo";
 
 import { SITE_NAME } from "~/constants";
 
-interface Props extends Omit<AstroSEOProps ,"languageAlternates"> {}
-const { title, description,  ...props } = Astro.props;
+interface Props extends Omit<AstroSEOProps, "languageAlternates"> {}
+
+const { title, description, ...props } = Astro.props;
 ---
 
-<html  {...getHtmlAttrs()}>
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		 
-		<SEO
-		title={title}
-		titleDefault={SITE_NAME}
-		titleTemplate={`%s - ${SITE_NAME}`}
-		description={description}
-		languageAlternates={data.map(({ locale, href }) => ({
-			hrefLang: locale,
-			href,
-		}))}
+<html {...getHtmlAttrs()}>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
 
-		{...props}
-	  />
-		<slot name="head" />
-	</head>
-	<body class="flex flex-col min-h-[100dvh]">
-        <Header />
-		
-		<main class="flex-1">
-			 <slot/>
+    <SEO
+      title={title}
+      titleDefault={SITE_NAME}
+      titleTemplate={`%s - ${SITE_NAME}`}
+      description={description}
+      languageAlternates={data.map(({ locale, href }) => ({
+        hrefLang: locale,
+        href,
+      }))}
+      {...props}
+    />
+    <slot name="head" />
+  </head>
+  <body class="flex min-h-[100dvh] flex-col">
+    <Header />
 
-		 </main>
-         <Footer />
-	</body>
+    <main class="flex-1">
+      <slot />
+    </main>
+    <Footer />
+  </body>
 </html>
